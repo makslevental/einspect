@@ -39,7 +39,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<=3.13"
+python = ">=3.8,<3.14"
 typing-extensions = "^4.4.0"
 
 [tool.poetry.group.dev.dependencies]
