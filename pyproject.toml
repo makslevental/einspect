@@ -29,6 +29,7 @@ keywords = [
 classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
     "Operating System :: OS Independent",
     "Topic :: Software Development :: Libraries",
@@ -38,7 +39,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.13"
+python = ">=3.8,<=3.13"
 typing-extensions = "^4.4.0"
 
 [tool.poetry.group.dev.dependencies]
