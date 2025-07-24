@@ -1,4 +1,5 @@
 """Test moving of views."""
+import sys
 from ast import literal_eval
 
 import pytest
@@ -17,7 +18,8 @@ def test_move_op():
     a = literal_eval("'eed25194-bb5e-4c96'")
     b = literal_eval("'90d584f0-2b6e-449c'")
     v = view(a)
-    # v <<= b
+    if sys.version_info <= (3, 12):
+        v <<= b
     assert a == b
 
 
