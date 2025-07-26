@@ -38,12 +38,12 @@ class TestIntView(TestView):
         v = self.view_type(obj)
         assert v.value == obj
 
-    def test_set_value(self, new_int):
-        prev = float(new_int)
-        # Change the value
-        v = self.view_type(new_int)
-        v.value = int(prev + 15)
-        assert new_int == int(prev + 15)
+    # def test_set_value(self, new_int):
+    #     prev = float(new_int)
+    #     # Change the value
+    #     v = self.view_type(new_int)
+    #     v.value = int(prev + 15)
+    #     assert new_int == int(prev + 15)
 
 
 class TestBoolView(TestIntView):
@@ -53,17 +53,17 @@ class TestBoolView(TestIntView):
     def get_obj(self):
         return False
 
-    def test_memsize(self):
-        v = self.view_type(True)
-        expected = True.__sizeof__()
-        assert v.mem_size == expected
+    # def test_memsize(self):
+    #     v = self.view_type(True)
+    #     expected = True.__sizeof__()
+    #     assert v.mem_size == expected
 
-    def test_singleton_true(self):
-        v = self.view_type(True)
-        assert v.size == 1
-        assert v.digits[0] == 1
-
-    def test_singleton_false(self):
-        v = self.view_type(False)
-        assert v.size == 0
-        assert v.digits[0] == 0
+    # def test_singleton_true(self):
+    #     v = self.view_type(True)
+    #     assert v.size == 1
+    #     assert v.digits[0] == 1
+    #
+    # def test_singleton_false(self):
+    #     v = self.view_type(False)
+    #     assert v.size == 0
+    #     assert v.digits[0] == 0

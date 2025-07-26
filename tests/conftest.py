@@ -1,6 +1,6 @@
+import multiprocessing
 import sys
 from ast import literal_eval
-from multiprocessing import Process
 from pathlib import Path
 from random import randint
 
@@ -44,7 +44,10 @@ def _run(func_path: Path, name: str):
 
 def pytest_pyfunc_call(pyfuncitem: pytest.Function):
     if "run_in_subprocess" in pyfuncitem.keywords:
-        p = Process(target=_run, args=(Path(pyfuncitem.fspath), pyfuncitem.name))
+        mp_context = multiprocessing.get_context("spawn")
+        p = mp_context.Process(
+            target=_run, args=(Path(pyfuncitem.fspath), pyfuncitem.name)
+        )
         p.start()
         p.join()
         if p.exitcode != 0:

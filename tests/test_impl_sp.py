@@ -1,5 +1,8 @@
 """(Subprocess) Tests for the @impl decorator and orig proxy."""
+
 from __future__ import annotations
+
+import sys
 
 import pytest
 
@@ -7,6 +10,9 @@ from einspect import impl, orig, view
 from einspect.type_orig import _impls
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 @pytest.mark.run_in_subprocess
 def test_impl_restore():
     # Clear impls cache
@@ -54,6 +60,9 @@ def test_impl_new_func_finalize():
     assert not hasattr(int, "_test_final")
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 @pytest.mark.run_in_subprocess
 def test_impl_cache():
     # Test that impls are cached
@@ -108,6 +117,9 @@ def test_impl_detach_weakref():
     assert res is fn
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 @pytest.mark.run_in_subprocess
 def test_impl_type():
     # Test that impl works on types
@@ -128,6 +140,9 @@ def test_impl_type():
     assert Foo @ "hi" == (Foo, "hi")
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 @pytest.mark.run_in_subprocess
 def test_impl_new():
     _call = None
@@ -154,6 +169,9 @@ def test_impl_new():
 
 
 # noinspection PyUnresolvedReferences
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 @pytest.mark.run_in_subprocess
 def test_impl_object():
     @impl(object)
