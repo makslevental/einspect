@@ -160,8 +160,9 @@ class PyTypeObject(PyVarObject[_T, None, None]):
         """Set an attribute on the type object. Uses custom overrides if available."""
         # Resolve the slot into an attr name, if any
         if (slot := get_slot(name)) is None:
-            self.SetAttr(name, value)
-            return
+            if self.SetAttr(name, value) != 0:
+                raise RuntimeError(f"failed to setattr {name}")
+            return None
 
         # Get PyMethods pointer, if null, error
         if slot.ptr_type and not getattr(self, slot.parts[0]):
@@ -180,7 +181,9 @@ class PyTypeObject(PyVarObject[_T, None, None]):
                 return setattr(self, slot.name, PyObject.from_object(value).as_ref())
 
         # If not a recognized slot, set with PyObject_SetAttr api
-        self.SetAttr(name, value)
+        if self.SetAttr(name, value) != 0:
+            raise RuntimeError(f"failed to setattr {name}")
+        return None
 
     def _try_del_tp_dict(self, name: str) -> None:
         """Try to delete a key from the type's dict, if tp_dict is not NULL."""
