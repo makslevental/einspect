@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import sys
+
 import pytest
 
 from einspect.errors import UnsafeError
@@ -65,6 +67,9 @@ class TestTypeView(TestView):
                 pass
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 @pytest.mark.run_in_subprocess
 def test_as_mutable():
     # Initial, setattr should fail
@@ -83,6 +88,7 @@ def test_as_mutable():
     assert repr(10) == "int_repr"
 
 
+@pytest.mark.skipif(sys.version_info > (3, 11), reason="mutating object not supported >= 3.12")
 def test_setitem():
     v = TypeView(dict)
 

@@ -1,4 +1,5 @@
 """Test moving of views."""
+
 import sys
 from ast import literal_eval
 

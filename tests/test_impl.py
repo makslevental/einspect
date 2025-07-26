@@ -1,6 +1,8 @@
 """Tests for the @impl decorator and orig proxy."""
+
 from __future__ import annotations
 
+import sys
 from contextlib import ExitStack
 
 import pytest
@@ -16,6 +18,9 @@ def test_impl_error():
             pass
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 def test_impl_new_func():
     with ExitStack() as stack:
 
@@ -55,6 +60,9 @@ def test_impl_new():
     assert called == (123,)
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 def test_impl_func():
     # Implement a new method for int
     @impl(int)
@@ -78,6 +86,9 @@ def test_impl_func():
         assert not a @ b
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 def test_impl_property():
     _call = None
 
@@ -101,6 +112,9 @@ def test_impl_property():
     assert int.real is not real
 
 
+@pytest.mark.skipif(
+    sys.version_info > (3, 11), reason="mutating object not supported >= 3.12"
+)
 def test_impl_view():
     v = view(frozenset)
     v["__name__"] = "custom_frozenset"
